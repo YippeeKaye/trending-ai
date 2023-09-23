@@ -21,9 +21,8 @@ export const columns: ColumnDef<Model>[] = [
   {
     accessorKey: "name",
     header: "Name",
-    name: "name",
     cell: ({ row }) => {
-      const name = row.getValue("name")
+      const name = row.getValue("name") as string
 
       return <div className="font-medium text-left">{name}</div>
     },
@@ -31,16 +30,14 @@ export const columns: ColumnDef<Model>[] = [
   {
     accessorKey: "description",
     header: "Description",
-    name: "description",
     cell: ({ row }) => {
-      const description = row.getValue("description")
+      const description = row.getValue("description") as string
 
       return <div className="font-medium text-center">{description}</div>
     },
   },
     {
       accessorKey: "runs",
-      name: "runs",
       header: ({ column }) => {
         return (
           <Button
@@ -62,7 +59,7 @@ export const columns: ColumnDef<Model>[] = [
         accessorKey: "url",
         header: "Link",
         cell: ({ row }) => {
-          const url = row.getValue("url")
+          const url = row.getValue("url") as string
   
           return <ButtonLink href={url} name={url}/>
         },

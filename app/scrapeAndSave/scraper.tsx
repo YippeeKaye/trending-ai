@@ -2,7 +2,7 @@ import axios from 'axios';
 import cheerio from 'cheerio';
 import sqlite3 from 'sqlite3';
 
-let db;
+let db: sqlite3.Database;
 
 export async function initializeDb() {
   db = new sqlite3.Database('./mydb.sqlite');
