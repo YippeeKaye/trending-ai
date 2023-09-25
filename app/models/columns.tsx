@@ -54,6 +54,36 @@ export const columns: ColumnDef<Model>[] = [
     }
   },
   {
+    accessorKey: 'delta',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          <div className='text-right'>Delta</div>
+          <ArrowUpDown className='w-4 h-4 ml-2' />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const runs = parseFloat(row.getValue('delta'));
+
+      return <div className='font-medium text-left'>{runs}</div>;
+    }
+  },
+  {
+    accessorKey: 'status',
+    header: ({ column }) => {
+      return <div className='text-right'>Status</div>;
+    },
+    cell: ({ row }) => {
+      const runs = parseFloat(row.getValue('delta'));
+
+      return <div className='font-medium text-left'>{runs}</div>;
+    }
+  },
+  {
     accessorKey: 'url',
     header: 'Link',
     cell: ({ row }) => {

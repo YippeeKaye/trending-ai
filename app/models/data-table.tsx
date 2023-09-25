@@ -162,6 +162,7 @@ function Filter ({
     <div>
       <div className='flex space-x-2'>
         <DebouncedInput
+          key='1'
           type='number'
           min={Number(column.getFacetedMinMaxValues()?.[0] ?? '')}
           max={Number(column.getFacetedMinMaxValues()?.[1] ?? '')}
@@ -177,6 +178,7 @@ function Filter ({
           className='w-24 border rounded shadow'
         />
         <DebouncedInput
+          key='2'
           type='number'
           min={Number(column.getFacetedMinMaxValues()?.[0] ?? '')}
           max={Number(column.getFacetedMinMaxValues()?.[1] ?? '')}
@@ -224,7 +226,7 @@ function DebouncedInput ({
 
   React.useEffect(() => {
     onChange(value);
-  }, [onChange, value]);
+  }, [value]);
 
   return (
     <Input {...props} value={value} onChange={e => setValue(e.target.value)} />

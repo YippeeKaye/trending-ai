@@ -28,6 +28,7 @@
     "cheerio-without-node-native": "^1.0.0-rc.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "crisp-sdk-web": "^1.0.21",
     "dayjs": "^1.11.10",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
