@@ -49,7 +49,6 @@ export const columns: ColumnDef<Model>[] = [
     },
     cell: ({ row }) => {
       const runs = parseFloat(row.getValue('runs'));
-
       return <div className='font-medium text-left'>{runs}</div>;
     }
   },
