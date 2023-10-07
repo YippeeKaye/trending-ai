@@ -10,13 +10,9 @@ const db = new sqlite3.Database('./mydb.sqlite');
 
 import Replicate from 'replicate';
 
-export const dynamic = 'force-dynamic';
-
 export async function GET () {
-  console.log('hello1');
   const tableExists = await verifyModelsTable();
   if (!tableExists) {
-    console.log('hello2');
     await initializeDb();
     const replicate = new Replicate();
     // paginate and get all models

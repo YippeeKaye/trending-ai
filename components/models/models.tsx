@@ -1,6 +1,8 @@
 import { columns } from './columns';
 import { DataTable } from './data-table';
 
+export const dynamic = 'force-dynamic';
+
 async function getData () {
   const res = await fetch(`${process.env.HOST}/api/models`, {
     method: 'GET',
