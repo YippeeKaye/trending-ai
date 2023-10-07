@@ -63,6 +63,7 @@ export function DataTable<TData, TValue> ({
               ? null
               : header.column.getCanFilter() && (
                   <Filter
+                    key={header.id}
                     name={header.id}
                     column={header.column}
                     table={table}
@@ -162,7 +163,6 @@ function Filter ({
     <div>
       <div className='flex space-x-2'>
         <DebouncedInput
-          key='1'
           type='number'
           min={Number(column.getFacetedMinMaxValues()?.[0] ?? '')}
           max={Number(column.getFacetedMinMaxValues()?.[1] ?? '')}

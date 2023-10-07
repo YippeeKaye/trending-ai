@@ -5,6 +5,7 @@ import { ArrowUpDown } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { ButtonLink } from '@/components/ui/button-link';
+import Replicate, { Model as ReplicateModel } from 'replicate';
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -16,7 +17,7 @@ export type Model = {
   url: string;
 };
 
-export const columns: ColumnDef<Model>[] = [
+export const columns: ColumnDef<ReplicateModel>[] = [
   {
     accessorKey: 'name',
     header: 'Name',
@@ -35,7 +36,7 @@ export const columns: ColumnDef<Model>[] = [
     }
   },
   {
-    accessorKey: 'runs',
+    accessorKey: 'run_count',
     header: ({ column }) => {
       return (
         <Button
@@ -48,36 +49,7 @@ export const columns: ColumnDef<Model>[] = [
       );
     },
     cell: ({ row }) => {
-      const runs = parseFloat(row.getValue('runs'));
-      return <div className='font-medium text-left'>{runs}</div>;
-    }
-  },
-  {
-    accessorKey: 'delta',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant='ghost'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          <div className='text-right'>Delta</div>
-          <ArrowUpDown className='w-4 h-4 ml-2' />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      const runs = parseFloat(row.getValue('delta'));
-
-      return <div className='font-medium text-left'>{runs}</div>;
-    }
-  },
-  {
-    accessorKey: 'status',
-    header: ({ column }) => {
-      return <div className='text-right'>Status</div>;
-    },
-    cell: ({ row }) => {
-      const runs = parseFloat(row.getValue('delta'));
+      const runs = parseFloat(row.getValue('run_count'));
 
       return <div className='font-medium text-left'>{runs}</div>;
     }
