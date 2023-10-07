@@ -1,10 +1,10 @@
 import Image from 'next/image';
-import ModelsPage from './models/page';
+import Models from '../components/models/models';
 
 export default function Home () {
   return (
     <main className='flex flex-col items-center justify-between min-h-screen p-24'>
-      <ModelsPage />
+      <Models />
     </main>
   );
 }

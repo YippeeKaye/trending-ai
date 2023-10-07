@@ -1,5 +1,4 @@
-import { listModelsSortedByRuns } from '../dbFunctions/models';
-import { Model, columns } from './columns';
+import { columns } from './columns';
 import { DataTable } from './data-table';
 
 async function getData () {
@@ -19,7 +18,7 @@ async function getData () {
   return result;
 }
 
-export default async function ModelsPage () {
+export default async function Models () {
   const data = await getData();
 
   return (

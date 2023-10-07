@@ -4,8 +4,30 @@ const db = new sqlite3.Database('./mydb.sqlite');
 
 export async function initializeDb () {
   await db.run(
-    'CREATE TABLE IF NOT EXISTS models (name TEXT UNIQUE, runs INTEGER, url TEXT, author TEXT, description TEXT, lastUpdatedDate TEXT, delta REAL)'
+    'CREATE TABLE IF NOT EXISTS models (name TEXT, runs INTEGER, url TEXT UNIQUE, author TEXT, description TEXT, lastUpdatedDate TEXT, delta REAL)'
   );
+}
+
+export async function verifyModelsTable (): Promise<boolean> {
+  try {
+    const result = await new Promise<boolean>((resolve, reject) => {
+      db.get(
+        'SELECT EXISTS(SELECT 1 FROM sqlite_master WHERE type = "table" AND name = "models") as "exists"',
+        (err: Error, row: { exists: number }) => {
+          if (err) {
+            console.error(err);
+            reject(err);
+          } else {
+            resolve(row.exists === 1);
+          }
+        }
+      );
+    });
+    return result;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 }
 
 export async function createTriggers () {

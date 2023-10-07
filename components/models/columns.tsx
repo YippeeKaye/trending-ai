@@ -17,7 +17,7 @@ export type Model = {
   url: string;
 };
 
-export const columns: ColumnDef<ReplicateModel>[] = [
+export const columns: ColumnDef<Model>[] = [
   {
     accessorKey: 'name',
     header: 'Name',
@@ -36,7 +36,7 @@ export const columns: ColumnDef<ReplicateModel>[] = [
     }
   },
   {
-    accessorKey: 'run_count',
+    accessorKey: 'runs',
     header: ({ column }) => {
       return (
         <Button
@@ -49,7 +49,7 @@ export const columns: ColumnDef<ReplicateModel>[] = [
       );
     },
     cell: ({ row }) => {
-      const runs = parseFloat(row.getValue('run_count'));
+      const runs = parseFloat(row.getValue('runs'));
 
       return <div className='font-medium text-left'>{runs}</div>;
     }
