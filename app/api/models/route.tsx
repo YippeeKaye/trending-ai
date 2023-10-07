@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 
-import Replicate, { Model as ReplicateModel } from 'replicate';
+import Replicate from 'replicate';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET () {
   const replicate = new Replicate();
@@ -10,6 +12,5 @@ export async function GET () {
   for await (const batch of replicate.paginate(replicate.models.list)) {
     allModels.push(...batch);
   }
-  console.log(allModels.length);
   return NextResponse.json(allModels);
 }
