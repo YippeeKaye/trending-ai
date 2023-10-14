@@ -57,7 +57,7 @@ export function DataTable<TData, TValue> ({
   return (
     <div>
       {table.getHeaderGroups().map(headerGroup => (
-        <div key={headerGroup.id} className='flex flex-row p-4 space-x-4'>
+        <div key={headerGroup.id} className='flex flex-row py-4 space-x-4'>
           {headerGroup.headers.map(header => {
             return header.isPlaceholder
               ? null

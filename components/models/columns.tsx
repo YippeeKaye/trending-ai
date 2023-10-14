@@ -5,7 +5,6 @@ import { ArrowUpDown } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { ButtonLink } from '@/components/ui/button-link';
-import Replicate, { Model as ReplicateModel } from 'replicate';
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.

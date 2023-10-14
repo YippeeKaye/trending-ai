@@ -1,7 +1,6 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
 import sqlite3 from 'sqlite3';
-import { createTriggers } from '../dbFunctions/models';
 
 let db: sqlite3.Database;
 
@@ -10,7 +9,6 @@ export async function initializeDb () {
   await db.run(
     'CREATE TABLE IF NOT EXISTS models (name TEXT UNIQUE, runs INTEGER, url TEXT, author TEXT, description TEXT, lastUpdatedDate TEXT, delta REAL)'
   );
-  await createTriggers();
 }
 
 export async function scrapeAndStore (page: number) {

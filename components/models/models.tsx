@@ -3,7 +3,7 @@ import { DataTable } from './data-table';
 
 export const dynamic = 'force-dynamic';
 
-async function getData () {
+async function getData (filters: any | null) {
   const res = await fetch(`${process.env.HOST}/api/models`, {
     method: 'GET',
     cache: 'no-store'
@@ -20,11 +20,16 @@ async function getData () {
   return result;
 }
 
-export default async function Models () {
-  const data = await getData();
+export default async function Models (trending: boolean) {
+  let data;
+  if (trending) {
+    data = await getData();
+  } else {
+    data = await getData();
+  }
 
   return (
-    <div className='container py-10 mx-auto'>
+    <div className='container mx-auto py-7'>
       <DataTable columns={columns} data={data} />
     </div>
   );

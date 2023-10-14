@@ -1,7 +1,12 @@
-import { scrapeAll } from '@/app/scrapeAndSave/scraper';
 import { NextResponse } from 'next/server';
+import { initializeDb } from '@/app/dbFunctions/models';
+import { getAllModels, saveNewModels } from '../models/route';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET () {
-  scrapeAll();
-  return NextResponse.json({});
+  await initializeDb();
+  const allModels = await getAllModels();
+  await saveNewModels(allModels);
+  return NextResponse.json({ size: allModels.length });
 }

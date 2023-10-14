@@ -1,11 +1,13 @@
 import sqlite3 from 'sqlite3';
 
 const db = new sqlite3.Database('./mydb.sqlite');
+sqlite3.verbose();
 
 export async function initializeDb () {
   await db.run(
     'CREATE TABLE IF NOT EXISTS models (name TEXT, runs INTEGER, url TEXT UNIQUE, author TEXT, description TEXT, lastUpdatedDate TEXT, delta REAL)'
   );
+  await createTriggers();
 }
 
 export async function verifyModelsTable (): Promise<boolean> {
@@ -32,34 +34,15 @@ export async function verifyModelsTable (): Promise<boolean> {
 
 export async function createTriggers () {
   db.run(`
-    CREATE TRIGGER IF NOT EXISTS calculate_relative_delta
-    AFTER INSERT ON models
-    BEGIN
-        -- Calculate the relative delta and update the new row
-        UPDATE models
-        SET delta = (1.0 - (
-            SELECT runs
-            FROM models
-            WHERE ROWID = NEW.ROWID
-        ) / NEW.runs) * 100.0
-        WHERE ROWID = NEW.ROWID;
-    END;
+      CREATE TRIGGER IF NOT EXISTS update_lastUpdatedDate
+      AFTER UPDATE ON models
+      BEGIN
+          -- Update the lastUpdatedDate column with the current UTC time
+          UPDATE models
+          SET lastUpdatedDate = datetime('now', 'utc')
+          WHERE rowid = NEW.rowid;
+      END;
     `);
-  db.run(`
-    CREATE TRIGGER IF NOT EXISTS update_relative_delta
-    AFTER UPDATE ON models
-    BEGIN
-        -- Calculate the relative delta and update the row being modified
-        UPDATE models
-        SET delta = (1.0 - (
-            SELECT runs
-            FROM models
-            WHERE ROWID = NEW.ROWID
-        ) / NEW.runs) * 100.0
-        WHERE ROWID = NEW.ROWID;
-    END;
-    
-  `);
 }
 
 export async function listModelsSortedByRuns () {
