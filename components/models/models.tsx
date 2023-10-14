@@ -3,11 +3,16 @@ import { DataTable } from './data-table';
 
 export const dynamic = 'force-dynamic';
 
-async function getData (filters: any | null) {
-  const res = await fetch(`${process.env.HOST}/api/models`, {
-    method: 'GET',
-    cache: 'no-store'
-  });
+async function getData (filters: string[] = []) {
+  const res = await fetch(
+    `${process.env.HOST}/api/models${
+      filters.length > 0 ? '?status=trending' : ''
+    }`,
+    {
+      method: 'GET',
+      cache: 'no-store'
+    }
+  );
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
 
@@ -20,10 +25,10 @@ async function getData (filters: any | null) {
   return result;
 }
 
-export default async function Models (trending: boolean) {
+export default async function Models (trending: boolean = false) {
   let data;
   if (trending) {
-    data = await getData();
+    data = await getData(['status=trending']);
   } else {
     data = await getData();
   }

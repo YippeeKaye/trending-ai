@@ -1,9 +1,10 @@
 import {
   initializeDb,
+  listModelsSortedByDelta,
   listModelsSortedByRuns,
   verifyModelsTable
 } from '@/app/dbFunctions/models';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import sqlite3 from 'sqlite3';
 import Replicate, { Model as ReplicateModel } from 'replicate';
 import { Model } from '@/components/models/columns';
@@ -84,13 +85,20 @@ export async function getAllModels (): Promise<ReplicateModel[]> {
   return Promise.resolve(allModels);
 }
 
-export async function GET () {
+export async function GET (request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const status = searchParams.get('status');
   const tableExists = await verifyModelsTable();
   if (!tableExists) {
     await initializeDb();
     const allModels = await getAllModels();
     await saveNewModels(allModels);
   }
-  const allModels = await listModelsSortedByRuns();
-  return NextResponse.json(allModels);
+  let models;
+  if (status === 'trending') {
+    models = await listModelsSortedByDelta();
+  } else {
+    models = await listModelsSortedByRuns();
+  }
+  return NextResponse.json(models);
 }

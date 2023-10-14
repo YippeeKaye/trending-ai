@@ -63,3 +63,22 @@ export async function listModelsSortedByRuns () {
     throw error;
   }
 }
+
+export async function listModelsSortedByDelta () {
+  try {
+    const rows = await new Promise((resolve, reject) => {
+      db.all('SELECT * FROM models ORDER BY delta DESC', (err, rows) => {
+        if (err) {
+          console.error(err);
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+    return rows;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
