@@ -1,7 +1,7 @@
 import sqlite3 from 'sqlite3';
 
-let db = new sqlite3.Database('./mydb.sqlite');
-sqlite3.verbose();
+const db = new sqlite3.Database('./mydb.sqlite');
+//sqlite3.verbose();
 
 export async function initializeDb () {
   await db.run(
@@ -46,15 +46,6 @@ export async function createTriggers () {
 }
 
 export async function listModelsSortedByRuns () {
-  if (!db) {
-    // If the database instance is not initialized, open the database connection
-    //@ts-ignore
-    db = await open({
-      //@ts-ignore
-      filename: './mydb.sqlite', // Specify the database file path
-      driver: sqlite3.Database // Specify the database driver (sqlite3 in this case)
-    });
-  }
   try {
     const rows = await new Promise((resolve, reject) => {
       db.all('SELECT * FROM models ORDER BY runs DESC', (err, rows) => {
@@ -74,15 +65,6 @@ export async function listModelsSortedByRuns () {
 }
 
 export async function listModelsSortedByDelta () {
-  if (!db) {
-    // If the database instance is not initialized, open the database connection
-    //@ts-ignore
-    db = await open({
-      //@ts-ignore
-      filename: './mydb.sqlite', // Specify the database file path
-      driver: sqlite3.Database // Specify the database driver (sqlite3 in this case)
-    });
-  }
   try {
     const rows = await new Promise((resolve, reject) => {
       db.all('SELECT * FROM models ORDER BY delta DESC', (err, rows) => {
