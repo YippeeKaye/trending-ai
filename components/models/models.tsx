@@ -25,7 +25,11 @@ async function getData (filters: string[] = []) {
   return result;
 }
 
-export default async function Models (trending: boolean = false) {
+type ModelsProps = {
+  trending?: boolean;
+};
+
+export default async function Models ({ trending = false }: ModelsProps) {
   let data;
   if (trending) {
     data = await getData(['status=trending']);
